@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="DSAnalyCommon" />
+        <module name="DsInfoservice" />
+        <module name="DsInterfaceService" />
+        <module name="DSservicecenterserver" />
+        <module name="DSSSanaly" />
+        <module name="DsViewservice" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="DSAnalyCommon" target="1.5" />
+      <module name="DSFlinkanaly" target="1.5" />
+      <module name="DsInfoservice" target="1.8" />
+      <module name="DsInterfaceService" target="1.8" />
+      <module name="DSservicecenterserver" target="1.8" />
+      <module name="DSSSanaly" target="1.8" />
+      <module name="DsViewservice" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="DSSSanaly" options="-Xlint:all -Xpkginfo:always" />
+    </option>
+  </component>
+</project>

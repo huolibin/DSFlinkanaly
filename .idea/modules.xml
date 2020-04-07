@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DSAnalyCommon/DSAnalyCommon.iml" filepath="$PROJECT_DIR$/DSAnalyCommon/DSAnalyCommon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DSFlinkanaly.iml" filepath="$PROJECT_DIR$/DSFlinkanaly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DSSSanaly/DSSSanaly.iml" filepath="$PROJECT_DIR$/DSSSanaly/DSSSanaly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DSservicecenterserver/DSservicecenterserver.iml" filepath="$PROJECT_DIR$/DSservicecenterserver/DSservicecenterserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DsInfoservice/DsInfoservice.iml" filepath="$PROJECT_DIR$/DsInfoservice/DsInfoservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DsInterfaceService/DsInterfaceService.iml" filepath="$PROJECT_DIR$/DsInterfaceService/DsInterfaceService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DsViewservice/DsViewservice.iml" filepath="$PROJECT_DIR$/DsViewservice/DsViewservice.iml" />
+    </modules>
+  </component>
+</project>
