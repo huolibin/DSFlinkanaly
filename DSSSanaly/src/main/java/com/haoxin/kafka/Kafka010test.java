@@ -1,23 +1,22 @@
 package com.haoxin.kafka;
 
 import com.haoxin.util.KafkaUtil;
+import org.apache.flink.api.common.functions.FilterFunction;
+import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.functions.RichMapFunction;
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
+import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.DataStreamSource;
-import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.AssignerWithPeriodicWatermarks;
 import org.apache.flink.streaming.api.watermark.Watermark;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010;
-
-import javax.annotation.Nullable;
 
 
 /**
@@ -49,7 +48,22 @@ public class Kafka010test {
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
         //接收source and 处理数据
-        DataStream<KafkaEvent> input = env.addSource(new FlinkKafkaConsumer010<KafkaEvent>(parameterTool.get("input-topic"), new KafkaEventSchema(), parameterTool.getProperties()));
+        DataStream<KafkaEvent> input = env.addSource(new FlinkKafkaConsumer010<String>(parameterTool.get("input-topic"), new SimpleStringSchema(), parameterTool.getProperties())).filter(new FilterFunction<String>() {
+            @Override
+            public boolean filter(String s) throws Exception {
+                if (s.split(",").length == 3){
+                return true;}
+                return false;
+            }
+        })//add filter
+                .map(new MapFunction<String, KafkaEvent>() {
+            @Override
+            public KafkaEvent map(String s) throws Exception {
+                String[] split = s.split(",");
+                return new KafkaEvent(split[0],Integer.valueOf(split[1]),Long.valueOf(split[2]));
+            }
+        });
+
         DataStream<KafkaEvent> map = input.assignTimestampsAndWatermarks(new CustormWatermark())
                 .keyBy("word")
                 .map(new MyMapAdd());
@@ -68,6 +82,7 @@ public class Kafka010test {
 
     private static class CustormWatermark implements AssignerWithPeriodicWatermarks<KafkaEvent>{
 
+        private static final long serialVersionUID = -2154168370181669758L;
         private final long maxOutOfOrderness = 10000; // 最大乱序时间10秒
         private long currentMaxTimestamp = 0L;  //当前最大时间
         @Override
@@ -84,6 +99,7 @@ public class Kafka010test {
     }
 
     private static class MyMapAdd extends RichMapFunction<KafkaEvent,KafkaEvent>{
+        private static final long serialVersionUID = -2344188370181669758L;
         private  transient ValueState<Integer> currentToCount;
         @Override
         public KafkaEvent map(KafkaEvent kafkaEvent) throws Exception {
