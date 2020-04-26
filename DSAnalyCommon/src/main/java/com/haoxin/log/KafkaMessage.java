@@ -3,6 +3,7 @@ package com.haoxin.log;
 /**
  * @author huolibin@haoxin.cn
  * @date Created by sheting on 2020/4/20 16:00
+ * 产品数据输入到kafka的数据格式
  */
 public class KafkaMessage {
     private String jsonmessage; //json格式的消息
