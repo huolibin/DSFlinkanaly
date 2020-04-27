@@ -14,7 +14,7 @@ import java.net.URL;
 public class DsClienttest {
     public static void main(String[] args) {
         String message = "asdfgh";
-        String address = "http://127.0.0.1:6097/DsInfoSJservice/webInfoSJService";
+        String address = "http://127.0.0.1:6098/DsInfoSJservice/webInfoSJService";
         try {
             URL url = new URL(address);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -23,7 +23,7 @@ public class DsClienttest {
             conn.setDoOutput(true);
             conn.setAllowUserInteraction(true);
             conn.setUseCaches(false);
-            conn.setReadTimeout(6*1000);
+            conn.setReadTimeout(6*10000);
             conn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36");
             conn.setRequestProperty("Content-Type","application/json");
             conn.connect();

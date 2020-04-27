@@ -1,5 +1,7 @@
 package com.haoxin;
 
+import com.alibaba.fastjson.JSON;
+import com.haoxin.log.KafkaMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 /**
  * @author huolibin@haoxin.cn
@@ -26,13 +29,18 @@ public class DsInfoSJservice {
 
     @RequestMapping(value="webInfoSJService",method = RequestMethod.POST)
     public void webInfoSJService(@RequestBody String jsonstr, HttpServletRequest request, HttpServletResponse response){
-
-
-        System.out.println("hello Jin来了" + jsonstr);
+        System.out.println("未转换kafkamessage之前的数据== " + jsonstr);
+        KafkaMessage kafkaMessage = new KafkaMessage();
+        kafkaMessage.setJsonmessage(jsonstr);
+        kafkaMessage.setCount(1);
+        kafkaMessage.setTimestamp(new Date().getTime());
+        jsonstr = JSON.toJSONString(kafkaMessage);
+        System.out.println("转换之后kafkamessage的数据== " + jsonstr);
 
         //业务开始
+        kafkaTemplate.send("testmessage","key",jsonstr);
 
-        kafkaTemplate.send("test","key",jsonstr);
+//        kafkaTemplate.send("testmessage","key",jsonstr);
         //业务结束
         PrintWriter writer = getWriter(response);
         response.setStatus(HttpStatus.OK.value());
