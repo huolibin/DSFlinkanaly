@@ -119,7 +119,7 @@ public class HbaseUtil {
      * 插入数据
      */
 
-    public static void  putData(String tablename, String rowkey, String famliyname, Map<String,String> datamap) throws Exception{
+    public static void  put(String tablename, String rowkey, String famliyname, Map<String,String> datamap) throws Exception{
         Table table = conn.getTable(TableName.valueOf(tablename));
         byte[] rowkeybyte = Bytes.toBytes(rowkey);
         Put put = new Put(rowkeybyte);
@@ -141,7 +141,7 @@ public class HbaseUtil {
      * 获取部分数据
      */
 
-    public static  String getData(String tablename, String rowkey, String famliyname, String colum) throws  Exception{
+    public static  String getdata(String tablename, String rowkey, String famliyname, String colum) throws  Exception{
         Table table = conn.getTable(TableName.valueOf(tablename));
         byte[] rowkeybyte = Bytes.toBytes(rowkey);
 
