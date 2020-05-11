@@ -3,8 +3,6 @@ package com.haoxin.stream_xinxiandu;
 import com.haoxin.log.KafkaMessage;
 import com.haoxin.stream_channel.KafkaMessageSchema;
 import com.haoxin.stream_channel.KafkaMessageWatermarks;
-import com.haoxin.stream_pvuv.PidaoPvUv;
-import com.haoxin.stream_pvuv.PindaopvuvReduce;
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.TimeCharacteristic;
@@ -46,8 +44,8 @@ public class SSPindaoXinXianDuProcessData {
 
         FlinkKafkaConsumer010 flinkKafkaConsumer = new FlinkKafkaConsumer010<KafkaMessage>(parameterTool.getRequired("input-topic"), new KafkaMessageSchema(), parameterTool.getProperties());
         DataStream<KafkaMessage> input = env.addSource(flinkKafkaConsumer.assignTimestampsAndWatermarks(new KafkaMessageWatermarks()));
-        DataStream<PidaoPvUv> map = input.flatMap(new PindaoXinXianDuMap());
-        DataStream<PidaoPvUv> reduce = map.keyBy("groupbyfield").countWindow(Long.valueOf(parameterTool.getRequired("winsdows.size"))).reduce(new PindaoXinXianDuReduce());
+        DataStream<PindaoXinXianDu> map = input.flatMap(new PindaoXinXianDuMap());
+        DataStream<PindaoXinXianDu> reduce = map.keyBy("groupbyfield").countWindow(Long.valueOf(parameterTool.getRequired("winsdows.size"))).reduce(new PindaoXinXianDuReduce());
 //        reduce.print();
         reduce.addSink(new PindaoXinXianDusinkreduce()).name("pdxinxiandureduce");
         try {
