@@ -28,6 +28,7 @@ public class Main {
         System.out.println("单次迭代运行次数："+kRun.getIterTimes());
         for (Cluster cluster : clusterSet) {
             System.out.println(cluster);
+            System.out.println("中心节点"+cluster.getCenter());
         }
     }
 }

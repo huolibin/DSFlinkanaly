@@ -1,28 +1,28 @@
-package com.haoxin.kmeans;
+package com.haoxin.batch_kmeans_usergroup.util;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
- 
-public class KMeansRun {  
+import com.haoxin.kmeans.Cluster;
+import com.haoxin.kmeans.DistanceCompute;
+import com.haoxin.kmeans.Point;
+
+import java.util.*;
+
+public class UserGroupKMeansRun {
     private int kNum;                             //簇的个数
     private int iterNum = 10;                     //迭代次数
- 
+
     private int iterMaxTimes = 100000;            //单次迭代最大运行次数
     private int iterRunTimes = 0;                 //单次迭代实际运行次数
     private float disDiff = (float) 0.01;         //单次迭代终止条件，两次运行中类中心的距离差
- 
+
     private List<float[]> original_data =null;    //用于存放，原始数据集
     private static List<Point> pointList = null;  //用于存放，原始数据集所构建的点集
     private DistanceCompute disC = new DistanceCompute();
     private int len = 0;                          //用于记录每个数据点的维度
- 
-    public KMeansRun(int k, List<float[]> original_data) {
+
+    public UserGroupKMeansRun(int k, List<float[]> original_data) {
         this.kNum = k;
         this.original_data = original_data;
-        this.len = original_data.get(0).length; 
+        this.len = original_data.get(0).length-1;
         //检查规范
         check();
         //初始化点集。
@@ -47,7 +47,8 @@ public class KMeansRun {
     private void init() {
         pointList = new ArrayList<Point>();
         for (int i = 0, j = original_data.size(); i < j; i++){
-            pointList.add(new Point(i, original_data.get(i)));
+
+            pointList.add(new Point(Integer.valueOf(original_data.get(i)[0]+""), deleteone(original_data.get(i))));
         }
     }
  
@@ -150,5 +151,21 @@ public class KMeansRun {
      */
     public int getIterTimes() {
         return iterRunTimes;
+    }
+
+    /**
+     *删除float[]数组中第一个数据
+     */
+    public static float[] deleteone(float[] f) {
+        int size = f.length;
+        if(size <2){
+            return null;
+        }
+        float[] newfloat = new float[size-1];
+        for (int i = 1; i < f.length; i++) {
+            newfloat[i-1]=f[i];
+        }
+
+        return newfloat;
     }
 }
