@@ -60,6 +60,7 @@ public class ChaoManAndWomanByreduceMap implements FlatMapFunction<ChaoManAndWom
                 flag = "man";
                 finalcount = chaoman;
             }
+            //浏览量超过2000的才是潮男or潮女
             if (finalcount > 2000) {
                 colum = "chaotype";
                 ChaoManAndWomanInfo chaoManAndWomanInfo1 = new ChaoManAndWomanInfo();
